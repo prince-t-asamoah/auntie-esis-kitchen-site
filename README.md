@@ -39,12 +39,20 @@ Why no framework: two pages don't need one, and it proves 90+ mobile performance
 
 ## Getting started
 
-Open index.html in a browser, or run any static server, e.g. `npx serve .`. There is nothing to install to view or deploy the site.
+Open index.html in a browser, or run any static server. There is nothing to install to view or deploy the site.
 
-`npm install` is only needed for the two optional dev scripts below. Their output is committed, so the deployed site never depends on them.
+For a local preview, with clean URLs such as `/contact/`:
+
+```
+npm install
+npm run preview   # http://localhost:3000
+```
+
+`npm install` only installs dev tools (`serve` for the preview, `sharp` for images). The deployed site never depends on them, and the scripts' output is committed.
 
 | Script | When to run it | What it does |
 | --- | --- | --- |
+| `npm run preview` | to view the site locally | serves the repo root at http://localhost:3000 |
 | `npm run optimise-images` | after replacing a photo | crops the originals in `docs/design/kitchen-prototype/images/` and writes AVIF/WebP/JPEG at 480/800(/1200)px into `images/`, within the size budgets (hero ≤ 100 KB, others ≤ 60 KB); also makes `og.jpg` and `apple-touch-icon.png` (takes a few minutes) |
 | `npm run inline-css` | after editing `css/styles.css` | copies the above-the-fold sections of `css/styles.css` into the `<style>` block in each page's `<head>` |
 
