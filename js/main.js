@@ -1,7 +1,7 @@
 // Auntie Esi's Kitchen: mobile menu + contact form. No dependencies.
 const CONFIG = {
   whatsappNumber: "233533456233", // SAMPLE: owner's WhatsApp number (also hard-coded in the HTML links)
-  formspreeId: "FORM_ID", // TODO: real Formspree ID (also in the contact form action)
+  formspreeId: "maeezjrb", // Formspree form ID (also in the contact form action)
 };
 
 const $ = (s, r = document) => r.querySelector(s);

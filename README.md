@@ -59,7 +59,7 @@ Open index.html in a browser, or run any static server, e.g. `npx serve .`. Ther
 ## Changing the WhatsApp number and form
 
 - **WhatsApp:** replace `233533456233` in every `wa.me` link in both HTML files, in the `tel:` link and phone text on the contact page, in the JSON-LD `telephone` on the home page, and in the `CONFIG` block at the top of `js/main.js`. Use international format with no "+".
-- **Form:** create a form at formspree.io and replace `FORM_ID` in the form `action` in `contact/index.html` and in `js/main.js`.
+- **Form:** the form posts to Formspree form `maeezjrb`. To use a different form, create one at formspree.io (turn reCAPTCHA off, since the site submits with JavaScript) and replace the ID in the form `action` in `contact/index.html` and in `js/main.js`.
 
 ## Deploying to Netlify
 
@@ -91,7 +91,8 @@ Sample content to confirm or replace with the owner's real details before launch
 - [ ] address: 14 Oxford Street, Osu, Accra (Find us, footer, contact page, JSON-LD, Google Maps link)
 - [ ] opening hours: Mon–Fri 7am–8pm, Sat 8am–8pm, Sun closed. The hero chip and menu overlay say "Open Mon–Sat, 7am–8pm", which conflicts with Saturday 8am; the owner should confirm
 - [ ] WhatsApp / phone number: +233 53 345 6233
-- [ ] Formspree form ID and notification email
+- [x] Formspree form ID (`maeezjrb`)
+- [ ] Formspree notification email (point it at the owner)
 - [ ] delivery partners ("Bolt Food & our riders"), ready time (~30 minutes) and MoMo payment
 - [ ] catering range (30 to 500 guests) and the "quote within a day" promise
 - [ ] Open Graph image (`og.jpg`, made from the hero photo)
