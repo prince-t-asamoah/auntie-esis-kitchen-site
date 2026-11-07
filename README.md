@@ -6,16 +6,42 @@ Status: live; sample content awaiting the owner's details
 
 Live site: https://auntie-esis-kitchen-site.netlify.app/ · Design prototype: [docs/design/kitchen-prototype/](docs/design/kitchen-prototype/)
 
-## PageSpeed Insights (mobile)
+## PageSpeed Insights
+
+Official [PageSpeed Insights](https://pagespeed.web.dev/) results for the live site, 7 November 2026.
+
+### Mobile
 
 | Page | Performance | Accessibility | Best Practices | SEO |
 | --- | --- | --- | --- | --- |
 | Home | 100 | 100 | 100 | 100 |
 | Contact | 100 | 100 | 100 | 100 |
 
-Measured on the live site on 7 November 2026 with Lighthouse (mobile, simulated throttling, the same engine as PageSpeed Insights). Home: FCP 1.1 s, LCP 1.6 s, TBT 60 ms, CLS 0.003, 298 KiB. Contact: FCP 0.9 s, LCP 0.9 s, TBT 10 ms, CLS 0.003, 23 KiB.
+| Page | FCP | LCP | TBT | CLS | Speed Index |
+| --- | --- | --- | --- | --- | --- |
+| Home | 0.8 s | 1.8 s | 0 ms | 0.008 | 1.3 s |
+| Contact | 0.8 s | 0.8 s | 0 ms | 0.001 | 0.9 s |
 
-Screenshots: [docs/pagespeed/](docs/pagespeed/)
+### Desktop
+
+| Page | Performance | Accessibility | Best Practices | SEO |
+| --- | --- | --- | --- | --- |
+| Home | 100 | 100 | 100 | 100 |
+| Contact | 100 | 100 | 100 | 100 |
+
+| Page | FCP | LCP | TBT | CLS | Speed Index |
+| --- | --- | --- | --- | --- | --- |
+| Home | 0.3 s | 0.4 s | 0 ms | 0.002 | 0.5 s |
+| Contact | 0.2 s | 0.2 s | 0 ms | 0.003 | 0.3 s |
+
+### Screenshots
+
+Click a screenshot for the full report.
+
+| | Mobile | Desktop |
+| --- | --- | --- |
+| Home | <a href="docs/pagespeed/home-mobile.png"><img src="docs/pagespeed/home-mobile.png" alt="PageSpeed Insights mobile report for the home page: 100 in all four categories" width="360"></a> | <a href="docs/pagespeed/home-desktop.png"><img src="docs/pagespeed/home-desktop.png" alt="PageSpeed Insights desktop report for the home page: 100 in all four categories" width="360"></a> |
+| Contact | <a href="docs/pagespeed/contact-mobile.png"><img src="docs/pagespeed/contact-mobile.png" alt="PageSpeed Insights mobile report for the contact page: 100 in all four categories" width="360"></a> | <a href="docs/pagespeed/contact-desktop.png"><img src="docs/pagespeed/contact-desktop.png" alt="PageSpeed Insights desktop report for the contact page: 100 in all four categories" width="360"></a> |
 
 Target: 90+ in every category on mobile, with an image-heavy menu and no framework.
 
