@@ -346,14 +346,14 @@ kitchen-nav-mobile.png, kitchen-components.png
 
 ## D3. Expected exports
 
-- [ ] `docs/design/kitchen-home-mobile.png`
-- [ ] `docs/design/kitchen-home-desktop.png`
-- [ ] `docs/design/kitchen-contact-mobile.png`
-- [ ] `docs/design/kitchen-contact-desktop.png`
-- [ ] `docs/design/kitchen-contact-catering-state.png`
-- [ ] `docs/design/kitchen-form-states.png`
-- [ ] `docs/design/kitchen-nav-mobile.png`
-- [ ] `docs/design/kitchen-components.png`
+- [ ] `docs/design/screens/kitchen-home-mobile.png`
+- [ ] `docs/design/screens/kitchen-home-desktop.png`
+- [ ] `docs/design/screens/kitchen-contact-mobile.png`
+- [ ] `docs/design/screens/kitchen-contact-desktop.png`
+- [ ] `docs/design/screens/kitchen-contact-catering-state.png`
+- [ ] `docs/design/screens/kitchen-form-states.png`
+- [ ] `docs/design/screens/kitchen-nav-mobile.png`
+- [ ] `docs/design/screens/kitchen-components.png`
 
 - [ ] `docs/design/kitchen-prototype/` — exported clickable prototype (HTML), or `docs/design/kitchen-prototype-link.txt` with the share link
 - [ ] `docs/design/handoff/` — developer handoff: tokens, screen and component specs, interaction notes, SVG icons, and a README of differences from SPEC.md
@@ -382,4 +382,4 @@ kitchen-nav-mobile.png, kitchen-components.png
 
 Add this line to the top of each repo's `docs/SPEC.md` once mockups are exported:
 
-> Visual reference: see `docs/design/*.png`. Exact spacing, sizes and tokens are in `docs/design/handoff/` — use them as reference only and do not copy prototype code into `src/`. Match layout, spacing and hierarchy from the mockups, and the behaviour shown in the clickable prototype (ignore prototype-only controls and the mock WhatsApp overlay — the real button opens wa.me); take copy, tokens and behaviour from this spec. Where the mockup and this spec disagree, this spec wins — flag the difference in your report.
+> Visual reference: see `docs/design/screens/*.png`. Exact spacing, sizes and tokens are in `docs/design/handoff/` — use them as reference only and do not copy prototype code into `src/`. Match layout, spacing and hierarchy from the mockups, and the behaviour shown in the clickable prototype (ignore prototype-only controls and the mock WhatsApp overlay — the real button opens wa.me); take copy, tokens and behaviour from this spec. Where the mockup and this spec disagree, this spec wins — flag the difference in your report.

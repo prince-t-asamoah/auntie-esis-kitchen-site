@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="theme-color" content="#B23A12">
+<style>
+html,body{margin:0;padding:0;background:#E9DFD3;}
+*,*::before,*::after{box-sizing:border-box;}
+a{color:#B23A12;} a:hover{color:#8C2D0E;}
+button,input,select,textarea{font:inherit;}
+*:focus:not(:focus-visible){outline:none !important;}
+</style>
+</helmet>
+<div style="font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; color:#2A1A12; display:flex; flex-direction:column; align-items:center; gap:16px; padding: {{ L.outerPad }}; min-height: {{ L.outerMinH }};">
+  <div style="width: {{ L.boxW }}; height: {{ L.boxH }}; flex-shrink:0;">
+    <div style="position:relative; width: {{ L.vpW }}; height: {{ L.vpH }}; transform: scale({{ L.scale }}); transform-origin: top left; overflow: {{ L.vpOverflow }}; background:#FFF9F2; box-shadow: {{ L.shadow }};">
+      <div ref="{{ scrollRef }}" style="position: {{ L.scPos }}; inset:0; overflow-y: {{ L.scOverflow }}; overflow-x:hidden; scrollbar-width:thin;">
+        <div style="opacity: {{ screenOpacity }}; transition: opacity 120ms ease;">
+
+          <sc-if value="{{ showChrome }}" hint-placeholder-val="{{ true }}">
+            <header style="position:sticky; top:0; z-index:40; background:#FFF9F2;">
+              <div style="height: {{ r.headerRow }}; max-width:70rem; margin:0 auto; padding:0 {{ r.g }}; display:flex; align-items:center; justify-content:space-between; gap:8px;">
+                <button onClick="{{ goHome }}" aria-label="Auntie Esi's Kitchen, home" style="display:flex; align-items:center; gap:8px; border:0; background:none; padding:0; min-height:48px; font-family: Georgia, 'Times New Roman', serif; font-weight:700; font-size: {{ r.wm }}; color:#2A1A12; cursor:pointer; white-space:nowrap; letter-spacing:-0.01em;" style-focus="outline:3px solid #B23A12; outline-offset:2px;"><svg aria-hidden="true" width="{{ r.logo }}" height="{{ r.logo }}" viewBox="0 0 64 64" style="flex-shrink:0;"><path d="M8 32h48a24 24 0 0 1-48 0z" style="fill:#B23A12;"></path><rect x="22" y="54" width="20" height="4" rx="2" style="fill:#2A1A12;"></rect><path d="M24 24v-8M32 24V10M40 24v-8" style="fill:none; stroke:#E8A33D; stroke-width:5; stroke-linecap:round;"></path></svg><span style="display:flex; flex-direction:{{ r.wmDir }}; column-gap:0.25em; line-height:1.05; text-align:left;"><span>Auntie Esi's</span><span style="color:#B23A12;">Kitchen</span></span></button>
+                <sc-if value="{{ isD }}" hint-placeholder-val="{{ false }}">
+                  <nav aria-label="Main" style="display:flex; align-items:center; gap:4px;">
+                    <button onClick="{{ goMenu }}" style="border:0; background:none; min-height:48px; padding:0 14px; font-size:16px; font-weight:600; color:#2A1A12; cursor:pointer;" style-hover="color:#B23A12; text-decoration:underline; text-underline-offset:8px;" style-focus="outline:3px solid #B23A12; outline-offset:2px;">Menu</button>
+                    <button onClick="{{ goCatering }}" style="border:0; background:none; min-height:48px; padding:0 14px; font-size:16px; font-weight:600; color:#2A1A12; cursor:pointer;" style-hover="color:#B23A12; text-decoration:underline; text-underline-offset:8px;" style-focus="outline:3px solid #B23A12; outline-offset:2px;">Catering</button>
+                    <button onClick="{{ goContact }}" aria-current="{{ cur.contactAria }}" style="border:0; background:none; min-height:48px; padding:0 14px; font-size:16px; font-weight:600; color:#2A1A12; cursor:pointer; text-decoration: {{ cur.contactDeco }}; text-decoration-color:#E8A33D; text-decoration-thickness:3px; text-underline-offset:8px;" style-hover="color:#B23A12;" style-focus="outline:3px solid #B23A12; outline-offset:2px;">Contact</button>
+                    <button onClick="{{ openWaGeneral }}" style="display:inline-flex; align-items:center; gap:8px; min-height:48px; padding:0 20px; margin-left:8px; border:0; border-radius:999px; background:#B23A12; color:#fff; font-size:16px; font-weight:700; cursor:pointer;" style-hover="background:#8C2D0E;" style-focus="outline:3px solid #2A1A12; outline-offset:2px;"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.3z"></path><path d="M9 9c0 3 3 6 6 6"></path></svg>Order</button>
+                  </nav>
+                </sc-if>
+                <sc-if value="{{ isM }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex; align-items:center; gap:4px;">
+                    <button onClick="{{ openWaGeneral }}" style="min-height:48px; padding:0 18px; border:0; border-radius:999px; background:#B23A12; color:#fff; font-size:15px; font-weight:700; cursor:pointer;" style-hover="background:#8C2D0E;" style-focus="outline:3px solid #2A1A12; outline-offset:2px;">Order</button>
+                    <button onClick="{{ openMenu }}" aria-controls="mobile-menu" aria-expanded="{{ menuExpanded }}" style="width:48px; height:48px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; border:0; background:none; color:#2A1A12; cursor:pointer; padding:0;" style-focus="outline:3px solid #B23A12; outline-offset:2px;"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round;"><path d="M4 7h16M4 12h16M4 17h16"></path></svg><span style="font-size:11px; font-weight:700; line-height:1;">Menu</span></button>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="height:6px; background: repeating-linear-gradient(90deg, #B23A12 0 18px, #E8A33D 18px 30px, #1F7A3A 30px 38px, #E8A33D 38px 44px, #2A1A12 44px 50px);"></div>
+            </header>
+          </sc-if>
+
+          <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+            <main>
+              <section style="position:relative; min-height: {{ r.heroMinH }}; display:flex; align-items:center; color:#fff; overflow:hidden; background:#5A3624;">
+                <img src="images/hero-waakye.jpg" alt="A plate of waakye with shito, egg and fried plantain" width="1376" height="768" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position: {{ r.heroFocus }};">
+                <div aria-hidden="true" style="position:absolute; inset:0; background: linear-gradient(rgba(42,26,18,.65), rgba(42,26,18,.35));"></div>
+                <div style="position:relative; width:100%; max-width:70rem; margin:0 auto; padding: {{ r.heroPad }};">
+                  <div style="max-width:40rem; display:flex; flex-direction:column; gap:16px;">
+                    <h1 style="margin:0; font-family: Georgia, 'Times New Roman', serif; font-weight:700; font-size: {{ r.h1 }}; line-height:1.12; letter-spacing:-0.01em; text-wrap:balance;">Home-style Ghanaian food, cooked fresh every morning</h1>
+                    <p style="margin:0; font-size: {{ r.lead }}; line-height:1.6; color:#FFF9F2; max-width:34rem; text-wrap:pretty;">Waakye, jollof, banku and tilapia from our kitchen in Osu. Order on WhatsApp for pickup or delivery across Accra.</p>
+                    <div style="display:flex; flex-direction: {{ r.btnDir }}; gap:12px; margin-top:8px;">
+                      <button onClick="{{ openWaGeneral }}" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:48px; padding:0 24px; border:0; border-radius:999px; background:#B23A12; color:#fff; font-size:16px; font-weight:700; cursor:pointer; width: {{ r.btnW }};" style-hover="background:#8C2D0E;" style-focus="outline:3px solid #FFF9F2; outline-offset:2px;"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.3z"></path><path d="M9 9c0 3 3 6 6 6"></path></svg>Order on WhatsApp</button>
+                      <button onClick="{{ goMenu }}" style="display:inline-flex; align-items:center; justify-content:center; min-height:48px; padding:0 24px; border:2px solid #FFF9F2; border-radius:999px; background:transparent; color:#fff; font-size:16px; font-weight:700; cursor:pointer; width: {{ r.btnW }};" style-hover="background:#FFF9F2; color:#2A1A12;" style-focus="outline:3px solid #FFF9F2; outline-offset:2px;">See the menu</button>
+                    </div>
+                    <ul style="list-style:none; margin:8px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:8px;">
+                      <li style="display:inline-flex; flex-shrink:0; white-space:nowrap; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; background: rgba(42,26,18,.6); border:1px solid rgba(255,249,242,.4); font-size:14px; color:#FFF9F2;"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>Open Mon–Sat, 7am–8pm</li>
+                      <li style="display:inline-flex; flex-shrink:0; white-space:nowrap; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; background: rgba(42,26,18,.6); border:1px solid rgba(255,249,242,.4); font-size:14px; color:#FFF9F2;"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Osu, Accra</li>
+                      <li style="display:inline-flex; flex-shrink:0; white-space:nowrap; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; background: rgba(42,26,18,.6); border:1px solid rgba(255,249,242,.4); font-size:14px; color:#FFF9F2;"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><circle cx="6" cy="17" r="3"></circle><circle cx="18" cy="17" r="3"></circle><path d="M6 17h4l3-7h3l2 7M13 10l-2-3H8"></path></svg>Delivery via Bolt Food &amp; our riders</li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+
+              <section data-sec="menu" style="padding: {{ r.sec }} {{ r.g }};">
+                <div style="max-width:70rem; margin:0 auto; display:flex; flex-direction:column; gap: {{ r.gapL }};">
+                  <div style="display:flex; flex-direction:column; gap:8px;">
+                    <h2 style="margin:0; font-family: Georgia, 'Times New Roman', serif; font-weight:700; font-size: {{ r.h2 }}; line-height:1.2;">Today's menu</h2>
+                    <p style="margin:0; color:#6B5A50; font-size:16px; line-height:1.6;">Prices include one bottle of water. Ask about extra protein.</p>
+                  </div>
+                  <div style="display:grid; grid-template-columns: {{ r.grid3 }}; gap:24px;">
+                    <sc-for list="{{ dishes }}" as="d" hint-placeholder-count="6">
+                      <article style="background:#fff; border:1px solid #EADBC8; border-radius:14px; overflow:hidden; display:flex; flex-direction:column;">
+                        <sc-if value="{{ d.hasImg }}" hint-placeholder-val="{{ false }}">
+                          <img src="{{ d.img }}" alt="{{ d.alt }}" width="1200" height="900" loading="{{ imgLoading }}" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio: 4 / 3; object-fit:cover; background:#EADBC8; flex-shrink:0;">
+                        </sc-if>
+                        <sc-if value="{{ d.noImg }}" hint-placeholder-val="{{ true }}">
+                          <div style="aspect-ratio: 4 / 3; background: repeating-linear-gradient(135deg, #F3E6D4 0 12px, #EADBC8 12px 24px); display:flex; align-items:flex-end; padding:12px;">
+                            <span style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:11px; color:#6B5A50; background:#FFF9F2; padding:3px 7px; border-radius:5px;">4:3 · PHOTO · {{ d.name }}</span>
+                          </div>
+                        </sc-if>
+                        <div style="padding:16px 20px 20px; display:flex; flex-direction:column; gap:8px; flex:1;">
+                          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
+                            <h3 style="margin:0; font-family: Georgia, 'Times New Roman', serif; font-size:1.25rem; line-height:1.3; font-weight:700;">{{ d.name }}</h3>
+                            <span style="flex-shrink:0; background:#E8A33D; color:#2A1A12; font-weight:700; font-size:15px; line-height:1; padding:7px 11px; border-radius:999px; white-space:nowrap;">{{ d.priceLabel }}</span>
+                          </div>
+                          <p style="margin:0; color:#6B5A50; font-size:16px; line-height:1.5; flex:1;">{{ d.desc }}</p>
+                          <button onClick="{{ d.order }}" style="margin-top:8px; display:flex; align-items:center; justify-content:center; min-height:48px; border:2px solid #B23A12; border-radius:999px; background:#fff; color:#B23A12; font-size:16px; font-weight:700; cursor:pointer; width:100%;" style-hover="background:#B23A12; color:#fff;" style-focus="outline:3px solid #2A1A12; outline-offset:2px;">Order this</button>
+                        </div>
+                      </article>
+                    </sc-for>
+                  </div>
+                </div>
+              </section>
+
+              <section style="background:#fff; border-top:1px solid #EADBC8; border-bottom:1px solid #EADBC8; padding: {{ r.sec }} {{ r.g }};">
+                <div style="max-width:70rem; margin:0 auto; display:flex; flex-direction:column; gap: {{ r.gapL }};">
+                  <h2 style="margin:0; font-family: Georgia, 'Times New Roman', serif; font-weight:700; font-size: {{ r.h2 }}; line-height:1.2;">Ordering is easy</h2>
+                  <ol style="list-style:none; margin:0; padding:0; display:grid; grid-template-columns: {{ r.grid3 }}; gap: {{ r.stepGap }};">
+                    <li style="display:flex; gap:16px; align-items:flex-start;">
+                      <span style="flex-shrink:0; width:48px; height:48px; border-radius:50%; background:#FFF9F2; border:1px solid #EADBC8; color:#B23A12; display:flex; align-items:center; justify-content:center;"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path><path d="M8.5 11h7M8.5 14h4"></path></svg></span>
+                      <div style="display:flex; flex-direction:column; gap:4px;"><h3 style="margin:0; font-family: Georgia, 'Times New Roman', serif; font-size:1.25rem; line-height:1.3;">Message us</h3><p style="margin:0; color:#6B5A50; line-height:1.6;">Tap "Order on WhatsApp" and tell us what you want.</p></div>
+                    </li>
+                    <li style="display:flex; gap:16px; align-items:flex-start;">
+                      <span style="flex-shrink:0; width:48px; height:48px; border-radius:50%; background:#FFF9F2; border:1px solid #EADBC8; color:#B23A12; display:flex; align-items:center; justify-content:center;"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><rect x="6" y="2" width="12" height="20" rx="2"></rect><path d="M11 18h2"></path></svg></span>
+                      <div style="display:flex; flex-direction:column; gap:4px;"><h3 style="margin:0; font-family: Georgia, 'Times New Roman', serif; font-size:1.25rem; line-height:1.3;">Pay with MoMo</h3><p style="margin:0; color:#6B5A50; line-height:1.6;">We confirm your order and send our MoMo number.</p></div>
+                    </li>
+                    <li style="display:flex; gap:16px; align-items:flex-start;">
+                      <span style="flex-shrink:0; width:48px; height:48px; border-radius:50%; background:#FFF9F2; border:1px solid #EADBC8; color:#B23A12; display:flex; align-items:center; justify-content:center;"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M5 8h14l-1 12H6L5 8z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg></span>
+                      <div style="display:flex; flex-direction:column; gap:4px;"><h3 style="margin:0; font-family: Georgia, 'Times New Roman', serif; font-size:1.25rem; line-height:1.3;">Pick up or get it delivered</h3><p style="margin:0; color:#6B5A50; line-height:1.6;">Ready in about 30 minutes. Delivery fee depends on your area.</p></div>
+                    </li>
+                  </ol>
+                </div>
+              </section>
+
+              <section style="padding: {{ r.sec }} {{ r.g }};">
+                <div style="max-width:70rem; margin:0 auto; display:grid; grid-template-columns: {{ r.grid2 }}; gap: {{ r.gapL }}; align-items:center;">
+                  <img src="images/about-cook.jpg" alt="A cook stirring a large pot of soup" width="1024" height="1024" loading="{{ imgLoading }}" decoding="async" style="order: {{ r.aboutImgOrder }}; display:block; width:100%; height:auto; aspect-ratio: 1 / 1; object-fit:cover; border-radius:14px; background:#EADBC8;">
+                  <div style="display:flex; flex-direction:column; gap:16px;">
+                    <h2 style="margin:0; font-family: Georgia, 'Times New Roman', serif; font-weight:700; font-size: {{ r.h2 }}; line-height:1.2;">Cooking for Osu since 2009</h2>
+                    <p style="margin:0; font-size:16px; line-height:1.6; max-width:34rem; text-wrap:pretty;">Auntie Esi started with a single table outside her house on Oxford Street. Today the kitchen feeds office workers, students and families across Accra.</p>
+                    <p style="margin:0; font-size:16px; line-height:1.6; max-width:34rem; text-wrap:pretty;">Everything is cooked fresh each morning with ingredients from Makola and Agbogbloshie markets.</p>
+                  </div>
+                </div>
+              </section>
+
+              <section data-sec="catering" style="background:#B23A12; color:#fff; padding: {{ r.sec }} {{ r.g }};">
+                <div style="max-width:70rem; margin:0 auto; display:flex; flex-direction: {{ r.catDir }}; align-items: {{ r.catAlign }}; justify-content:space-between; gap:24px;">
+                  <div style="max-width:42rem; display:flex; flex-direction:column; gap:12px;">
+                    <h2 style="margin:0; font-family: Georgia, 'Times New Roman', serif; font-weight:700; font-size: {{ r.h2 }}; line-height:1.2; color:#fff; text-wrap:balance;">Catering for funerals, weddings and office events</h2>
+                    <p style="margin:0; font-size: {{ r.lead }}; line-height:1.6; color:#fff;">From 30 to 500 guests. Tell us the date and number of people and we'll send a quote within a day.</p>
+                  </div>
+                  <button onClick="{{ goCateringQuote }}" style="flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; min-height:48px; padding:0 24px; border:0; border-radius:999px; background:#fff; color:#B23A12; font-size:16px; font-weight:700; cursor:pointer; width: {{ r.btnW }};" style-hover="background:#FFF9F2; color:#8C2D0E;" style-focus="outline:3px solid #fff; outline-offset:3px;">Request a catering quote</button>
+                </div>
+              </section>
+
+              <section data-sec="find-us" style="padding: {{ r.sec }} {{ r.g }};">
+                <div style="max-width:70rem; margin:0 auto; display:flex; flex-direction:column; gap: {{ r.gapL }};">
+                  <h2 style="margin:0; font-family: Georgia, 'Times New Roman', serif; font-weight:700; font-size: {{ r.h2 }}; line-height:1.2;">Find us</h2>
+                  <div style="display:grid; grid-template-columns: {{ r.grid2 }}; gap:24px;">
+                    <div style="background:#fff; border:1px solid #EADBC8; border-radius:14px; padding: {{ r.cardPad }}; display:flex; flex-direction:column; gap:20px; align-items:flex-start;">
+                      <div style="display:flex; gap:12px; align-items:flex-start;">
+                        <span style="color:#B23A12; padding-top:2px;"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg></span>
+                        <p style="margin:0; font-family: Georgia, 'Times New Roman', serif; font-size:1.25rem; line-height:1.4; font-weight:700;">14 Oxford Street, Osu, Accra</p>
+                      </div>
+                      <button onClick="{{ openMaps }}" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:48px; padding:0 24px; border:0; border-radius:999px; background:#B23A12; color:#fff; font-size:16px; font-weight:700; cursor:pointer; width: {{ r.btnW }};" style-hover="background:#8C2D0E;" style-focus="outline:3px solid #2A1A12; outline-offset:2px;">Open in Google Maps<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"></path></svg></button>
+                    </div>
+                    <div style="background:#fff; border:1px solid #EADBC8; border-radius:14px; padding: {{ r.cardPad }}; display:flex; gap:12px; align-items:flex-start;">
+                      <span style="color:#B23A12; padding-top:12px;"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span>
+                      <dl style="margin:0; flex:1; display:flex; flex-direction:column;">
+                        <div style="display:flex; justify-content:space-between; gap:16px; padding:12px 0; border-bottom:1px solid #EADBC8;"><dt style="font-weight:600;">Mon–Fri</dt><dd style="margin:0;">7am–8pm</dd></div>
+                        <div style="display:flex; justify-content:space-between; gap:16px; padding:12px 0; border-bottom:1px solid #EADBC8;"><dt style="font-weight:600;">Sat</dt><dd style="margin:0;">8am–8pm</dd></div>
+                        <div style="display:flex; justify-content:space-between; gap:16px; padding:12px 0;"><dt style="font-weight:600;">Sun</dt><dd style="margin:0; color:#6B5A50;">Closed</dd></div>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </main>
+          </sc-if>
+
+          <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+            <main>
+              <sc-if value="{{ showExtras }}" hint-placeholder-val="{{ true }}">
+                <section style="padding: {{ r.sec }} {{ r.g }} 0;">
+                  <div style="max-width:70rem; margin:0 auto; display:flex; flex-direction:column; gap:16px;">
+                    <h1 style="margin:0; font-family: Georgia, 'Times New Roman', serif; font-weight:700; font-size: {{ r.h1 }}; line-height:1.12; letter-spacing:-0.01em;">Get in touch</h1>
+                    <p style="margin:0; font-size: {{ r.lead }}; line-height:1.6; max-width:40rem; text-wrap:pretty;">For catering and bulk orders, use the form below. For food today, WhatsApp is fastest.</p>
+                    <button onClick="{{ openWaGeneral }}" style="margin-top:8px; display:flex; align-items:center; gap:16px; width:100%; max-width:40rem; text-align:left; padding:16px 20px; min-height:72px; background:#fff; border:1px solid #EADBC8; border-radius:14px; cursor:pointer; color:#2A1A12;" style-hover="border-color:#B23A12;" style-focus="outline:3px solid #B23A12; outline-offset:2px;">
+                      <span style="flex-shrink:0; width:40px; height:40px; border-radius:50%; background:#25D366; color:#fff; display:flex; align-items:center; justify-content:center;"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.3z"></path><path d="M9 9c0 3 3 6 6 6"></path></svg></span>
+                      <span style="flex:1; font-weight:700; font-size:1.0625rem; line-height:1.4;">Ordering food now? Message us on WhatsApp →</span>
+                    </button>
+                  </div>
+                </section>
+              </sc-if>
+              <section style="padding: {{ r.contactPad }};">
+                <div style="max-width:70rem; margin:0 auto; display:grid; grid-template-columns: {{ r.contactCols }}; gap: {{ r.gapL }}; align-items:start;">
+                  <div style="background:#fff; border:1px solid #EADBC8; border-radius:14px; padding: {{ r.cardPad }};">
+                    <sc-if value="{{ fs.success }}" hint-placeholder-val="{{ false }}">
+                      <div role="status" style="display:flex; flex-direction:column; align-items:flex-start; gap:16px; padding:16px 0;">
+                        <span style="width:56px; height:56px; border-radius:50%; background:#E6F2E9; color:#1F7A3A; display:flex; align-items:center; justify-content:center;"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round;"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+                        <p style="margin:0; font-family: Georgia, 'Times New Roman', serif; font-size:1.5rem; font-weight:700; line-height:1.3;">Thank you! We'll reply within one working day.</p>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ fs.showForm }}" hint-placeholder-val="{{ true }}">
+                      <form onSubmit="{{ onSubmit }}" style="display:flex; flex-direction:column; gap:20px;">
+                        <div style="display:flex; flex-direction:column; gap:6px;">
+                          <label style="font-weight:600; font-size:15px;">Your name</label>
+                          <input type="text" name="name" autocomplete="name" aria-required="true" aria-invalid="{{ fe.name.invalid }}" value="{{ form.name }}" onChange="{{ h.name }}" onBlur="{{ b.name }}" style="min-height:48px; padding:0 14px; font-size:16px; border:1.5px solid {{ fe.name.border }}; border-radius:10px; background: {{ fe.name.bg }}; color:#2A1A12; outline:none; width:100%;" style-focus="border-color:#B23A12; box-shadow:0 0 0 3px rgba(178,58,18,.25);">
+                          <sc-if value="{{ fe.name.has }}" hint-placeholder-val="{{ false }}"><p aria-live="polite" style="margin:0; color:#B23A12; font-size:14px; font-weight:600; display:flex; gap:6px; align-items:center;"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" style="flex-shrink:0; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round;"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5M12 16.5v.5"></path></svg>{{ fe.name.msg }}</p></sc-if>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:6px;">
+                          <label style="font-weight:600; font-size:15px;">Phone number</label>
+                          <span style="font-size:14px; color:#6B5A50;">e.g. 024 123 4567 or +233 24 123 4567</span>
+                          <input type="tel" name="phone" inputmode="tel" autocomplete="tel" aria-required="true" aria-invalid="{{ fe.phone.invalid }}" value="{{ form.phone }}" onChange="{{ h.phone }}" onBlur="{{ b.phone }}" style="min-height:48px; padding:0 14px; font-size:16px; border:1.5px solid {{ fe.phone.border }}; border-radius:10px; background: {{ fe.phone.bg }}; color:#2A1A12; outline:none; width:100%;" style-focus="border-color:#B23A12; box-shadow:0 0 0 3px rgba(178,58,18,.25);">
+                          <sc-if value="{{ fe.phone.has }}" hint-placeholder-val="{{ false }}"><p aria-live="polite" style="margin:0; color:#B23A12; font-size:14px; font-weight:600; display:flex; gap:6px; align-items:center;"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" style="flex-shrink:0; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round;"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5M12 16.5v.5"></path></svg>{{ fe.phone.msg }}</p></sc-if>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:6px;">
+                          <label style="font-weight:600; font-size:15px;">Email (optional)</label>
+                          <input type="email" name="email" autocomplete="email" aria-invalid="{{ fe.email.invalid }}" value="{{ form.email }}" onChange="{{ h.email }}" onBlur="{{ b.email }}" style="min-height:48px; padding:0 14px; font-size:16px; border:1.5px solid {{ fe.email.border }}; border-radius:10px; background: {{ fe.email.bg }}; color:#2A1A12; outline:none; width:100%;" style-focus="border-color:#B23A12; box-shadow:0 0 0 3px rgba(178,58,18,.25);">
+                          <sc-if value="{{ fe.email.has }}" hint-placeholder-val="{{ false }}"><p aria-live="polite" style="margin:0; color:#B23A12; font-size:14px; font-weight:600;">{{ fe.email.msg }}</p></sc-if>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:6px;">
+                          <label style="font-weight:600; font-size:15px;">Enquiry type</label>
+                          <div style="position:relative;">
+                            <select name="type" aria-required="true" aria-invalid="{{ fe.type.invalid }}" value="{{ form.type }}" onChange="{{ h.type }}" onBlur="{{ b.type }}" style="appearance:none; -webkit-appearance:none; min-height:48px; padding:0 44px 0 14px; font-size:16px; border:1.5px solid {{ fe.type.border }}; border-radius:10px; background: {{ fe.type.bg }}; color:#2A1A12; outline:none; width:100%; cursor:pointer;" style-focus="border-color:#B23A12; box-shadow:0 0 0 3px rgba(178,58,18,.25);">
+                              <option value="">Choose one</option>
+                              <option value="Catering">Catering</option>
+                              <option value="Bulk office order">Bulk office order</option>
+                              <option value="Feedback">Feedback</option>
+                              <option value="Other">Other</option>
+                            </select>
+                            <sc-if value="{{ frameSelect }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="position:absolute; left:2px; top:2px; bottom:2px; right:40px; display:flex; align-items:center; padding-left:12px; background:#fff; font-size:16px; color:#2A1A12; pointer-events:none; border-radius:8px 0 0 8px;">{{ form.type }}</span></sc-if>
+                            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" style="position:absolute; right:14px; top:14px; pointer-events:none; fill:none; stroke:#2A1A12; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M6 9l6 6 6-6"></path></svg>
+                          </div>
+                          <sc-if value="{{ fe.type.has }}" hint-placeholder-val="{{ false }}"><p aria-live="polite" style="margin:0; color:#B23A12; font-size:14px; font-weight:600; display:flex; gap:6px; align-items:center;"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" style="flex-shrink:0; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round;"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5M12 16.5v.5"></path></svg>{{ fe.type.msg }}</p></sc-if>
+                        </div>
+                        <sc-if value="{{ showCatering }}" hint-placeholder-val="{{ false }}">
+                          <div style="display:grid; grid-template-columns: {{ r.grid2 }}; gap:20px; padding:16px; margin:0 -4px; border-radius:12px; background:#FFF9F2; border:1px dashed #E8A33D;">
+                            <div style="display:flex; flex-direction:column; gap:6px;">
+                              <label style="font-weight:600; font-size:15px;">Event date (if catering)</label>
+                              <input type="date" name="event_date" value="{{ form.event_date }}" onChange="{{ h.event_date }}" style="min-height:48px; padding:0 14px; font-size:16px; border:1.5px solid #9A8678; border-radius:10px; background:#fff; color:#2A1A12; outline:none; width:100%;" style-focus="border-color:#B23A12; box-shadow:0 0 0 3px rgba(178,58,18,.25);">
+                            </div>
+                            <div style="display:flex; flex-direction:column; gap:6px;">
+                              <label style="font-weight:600; font-size:15px;">Number of guests</label>
+                              <input type="number" name="guests" min="1" inputmode="numeric" aria-invalid="{{ fe.guests.invalid }}" value="{{ form.guests }}" onChange="{{ h.guests }}" onBlur="{{ b.guests }}" style="min-height:48px; padding:0 14px; font-size:16px; border:1.5px solid {{ fe.guests.border }}; border-radius:10px; background:#fff; color:#2A1A12; outline:none; width:100%;" style-focus="border-color:#B23A12; box-shadow:0 0 0 3px rgba(178,58,18,.25);">
+                              <sc-if value="{{ fe.guests.has }}" hint-placeholder-val="{{ false }}"><p aria-live="polite" style="margin:0; color:#B23A12; font-size:14px; font-weight:600;">{{ fe.guests.msg }}</p></sc-if>
+                            </div>
+                          </div>
+                        </sc-if>
+                        <div style="display:flex; flex-direction:column; gap:6px;">
+                          <label style="font-weight:600; font-size:15px;">Message</label>
+                          <textarea name="message" rows="5" aria-required="true" aria-invalid="{{ fe.message.invalid }}" value="{{ form.message }}" onChange="{{ h.message }}" onBlur="{{ b.message }}" style="min-height:140px; padding:12px 14px; font-size:16px; line-height:1.5; border:1.5px solid {{ fe.message.border }}; border-radius:10px; background: {{ fe.message.bg }}; color:#2A1A12; outline:none; width:100%; resize:vertical;" style-focus="border-color:#B23A12; box-shadow:0 0 0 3px rgba(178,58,18,.25);"></textarea>
+                          <sc-if value="{{ fe.message.has }}" hint-placeholder-val="{{ false }}"><p aria-live="polite" style="margin:0; color:#B23A12; font-size:14px; font-weight:600; display:flex; gap:6px; align-items:center;"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" style="flex-shrink:0; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round;"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5M12 16.5v.5"></path></svg>{{ fe.message.msg }}</p></sc-if>
+                        </div>
+                        <sc-if value="{{ fs.failed }}" hint-placeholder-val="{{ false }}">
+                          <div role="alert" style="display:flex; gap:12px; align-items:flex-start; padding:14px 16px; border-radius:10px; background:#FDEDE7; border:1px solid #E3A48D;">
+                            <span style="color:#B23A12; padding-top:2px;"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round;"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5M12 16.5v.5"></path></svg></span>
+                            <p style="margin:0; font-size:15px; line-height:1.5;">Something went wrong. Please try again or <button type="button" onClick="{{ openWaGeneral }}" style="border:0; background:none; padding:0; color:#B23A12; font-weight:700; text-decoration:underline; cursor:pointer; font-size:15px;">message us on WhatsApp</button>.</p>
+                          </div>
+                        </sc-if>
+                        <button type="submit" disabled="{{ fs.sending }}" aria-busy="{{ fs.busy }}" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:48px; padding:0 32px; border:0; border-radius:999px; background: {{ fs.btnBg }}; color:#fff; font-size:16px; font-weight:700; cursor: {{ fs.cursor }}; width: {{ r.submitW }}; align-self:flex-start;" style-hover="background:#8C2D0E;" style-focus="outline:3px solid #2A1A12; outline-offset:2px;">{{ fs.btnLabel }}</button>
+                      </form>
+                    </sc-if>
+                  </div>
+                  <sc-if value="{{ showExtras }}" hint-placeholder-val="{{ true }}">
+                    <aside style="display:flex; flex-direction:column; gap:24px; padding: {{ r.infoPad }};">
+                      <div style="display:flex; gap:12px; align-items:flex-start;">
+                        <span style="color:#B23A12;"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><rect x="6" y="2" width="12" height="20" rx="2"></rect><path d="M11 18h2"></path></svg></span>
+                        <div style="display:flex; flex-direction:column; gap:4px;">
+                          <span style="font-weight:700;">Phone / WhatsApp</span>
+                          <a href="tel:+233533456233" style="color:#2A1A12; font-size:16px; text-decoration:underline; text-underline-offset:3px;">+233 53 345 6233</a>
+                        </div>
+                      </div>
+                      <div style="display:flex; gap:12px; align-items:flex-start;">
+                        <span style="color:#B23A12;"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg></span>
+                        <span style="font-weight:700; line-height:1.5;">14 Oxford Street, Osu, Accra</span>
+                      </div>
+                      <div style="display:flex; gap:12px; align-items:flex-start;">
+                        <span style="color:#B23A12;"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span>
+                        <dl style="margin:0; flex:1; display:flex; flex-direction:column; gap:6px;">
+                          <div style="display:flex; justify-content:space-between; gap:16px;"><dt style="font-weight:600;">Mon–Fri</dt><dd style="margin:0;">7am–8pm</dd></div>
+                          <div style="display:flex; justify-content:space-between; gap:16px;"><dt style="font-weight:600;">Sat</dt><dd style="margin:0;">8am–8pm</dd></div>
+                          <div style="display:flex; justify-content:space-between; gap:16px;"><dt style="font-weight:600;">Sun</dt><dd style="margin:0; color:#6B5A50;">Closed</dd></div>
+                        </dl>
+                      </div>
+                    </aside>
+                  </sc-if>
+                </div>
+              </section>
+            </main>
+          </sc-if>
+
+          <sc-if value="{{ showChrome }}" hint-placeholder-val="{{ true }}">
+            <footer style="background:#FFF9F2;">
+              <div style="height:6px; background: repeating-linear-gradient(90deg, #B23A12 0 18px, #E8A33D 18px 30px, #1F7A3A 30px 38px, #E8A33D 38px 44px, #2A1A12 44px 50px);"></div>
+              <div style="max-width:70rem; margin:0 auto; padding:32px {{ r.g }} 16px; display:flex; flex-direction: {{ r.footDir }}; justify-content:space-between; align-items: {{ r.footAlign }}; gap:16px;">
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                  <button onClick="{{ goHome }}" aria-label="Auntie Esi's Kitchen, home" style="display:flex; align-items:center; gap:10px; align-self:flex-start; border:0; background:none; padding:0; min-height:48px; font-family: Georgia, 'Times New Roman', serif; font-weight:700; font-size:20px; color:#2A1A12; cursor:pointer;" style-focus="outline:3px solid #B23A12; outline-offset:2px;"><svg aria-hidden="true" width="40" height="40" viewBox="0 0 64 64" style="flex-shrink:0;"><path d="M8 32h48a24 24 0 0 1-48 0z" style="fill:#B23A12;"></path><rect x="22" y="54" width="20" height="4" rx="2" style="fill:#2A1A12;"></rect><path d="M24 24v-8M32 24V10M40 24v-8" style="fill:none; stroke:#E8A33D; stroke-width:5; stroke-linecap:round;"></path></svg><span style="display:flex; flex-direction:column; column-gap:0.25em; line-height:1.05; text-align:left;"><span>Auntie Esi's</span><span style="color:#B23A12;">Kitchen</span></span></button>
+                  <span style="font-size:15px; color:#6B5A50;">14 Oxford Street, Osu, Accra</span>
+                </div>
+                <nav aria-label="Footer" style="display:flex; flex-wrap:wrap; gap:0 4px; margin-left:-12px;">
+                  <button onClick="{{ goMenu }}" style="border:0; background:none; min-height:48px; padding:0 12px; font-size:16px; font-weight:600; color:#2A1A12; cursor:pointer;" style-hover="color:#B23A12; text-decoration:underline;" style-focus="outline:3px solid #B23A12;">Menu</button>
+                  <button onClick="{{ goCatering }}" style="border:0; background:none; min-height:48px; padding:0 12px; font-size:16px; font-weight:600; color:#2A1A12; cursor:pointer;" style-hover="color:#B23A12; text-decoration:underline;" style-focus="outline:3px solid #B23A12;">Catering</button>
+                  <button onClick="{{ goFind }}" style="border:0; background:none; min-height:48px; padding:0 12px; font-size:16px; font-weight:600; color:#2A1A12; cursor:pointer;" style-hover="color:#B23A12; text-decoration:underline;" style-focus="outline:3px solid #B23A12;">Find us</button>
+                  <button onClick="{{ goContact }}" style="border:0; background:none; min-height:48px; padding:0 12px; font-size:16px; font-weight:600; color:#2A1A12; cursor:pointer;" style-hover="color:#B23A12; text-decoration:underline;" style-focus="outline:3px solid #B23A12;">Contact</button>
+                </nav>
+              </div>
+              <div style="border-top:1px solid #EADBC8;">
+                <div style="max-width:70rem; margin:0 auto; padding:16px {{ r.g }} {{ r.footPadB }};">
+                  <p style="margin:0; font-size:14px; color:#6B5A50;">Website by Prince Twumasi Asamoah · <a href="#" onClick="{{ onGithub }}" style="color:#6B5A50; text-decoration:underline;">GitHub</a></p>
+                </div>
+              </div>
+            </footer>
+          </sc-if>
+        </div>
+      </div>
+
+      <sc-if value="{{ showFloat }}" hint-placeholder-val="{{ true }}">
+        <button aria-label="Chat with us on WhatsApp" onClick="{{ openWaGeneral }}" style="position:absolute; right: {{ r.waInset }}; bottom: {{ r.waInset }}; z-index:50; width:56px; height:56px; border-radius:50%; background:#25D366; color:#fff; border:0; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 14px rgba(42,26,18,.28); cursor:pointer; transition: transform 150ms ease;" style-hover="transform:scale(1.05);" style-focus="outline:3px solid #2A1A12; outline-offset:3px;"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.3z"></path><path d="M9 9c0 3 3 6 6 6"></path></svg></button>
+      </sc-if>
+
+      <sc-if value="{{ menuMounted }}" hint-placeholder-val="{{ false }}">
+        <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" style="position:absolute; inset:0; z-index:60; background:#FFF9F2; display:flex; flex-direction:column; opacity: {{ menuOpacity }}; transition: opacity 150ms ease;">
+          <div style="flex-shrink:0;">
+            <div style="height:54px; padding:0 16px; display:flex; align-items:center; justify-content:space-between;">
+              <button onClick="{{ goHome }}" aria-label="Auntie Esi's Kitchen, home" style="display:flex; align-items:center; gap:8px; border:0; background:none; padding:0; min-height:48px; font-family: Georgia, 'Times New Roman', serif; font-weight:700; font-size:17px; color:#2A1A12; cursor:pointer; white-space:nowrap;"><svg aria-hidden="true" width="32" height="32" viewBox="0 0 64 64" style="flex-shrink:0;"><path d="M8 32h48a24 24 0 0 1-48 0z" style="fill:#B23A12;"></path><rect x="22" y="54" width="20" height="4" rx="2" style="fill:#2A1A12;"></rect><path d="M24 24v-8M32 24V10M40 24v-8" style="fill:none; stroke:#E8A33D; stroke-width:5; stroke-linecap:round;"></path></svg><span style="display:flex; flex-direction:column; column-gap:0.25em; line-height:1.05; text-align:left;"><span>Auntie Esi's</span><span style="color:#B23A12;">Kitchen</span></span></button>
+              <button onClick="{{ closeMenu }}" aria-label="Close menu" style="width:48px; height:48px; display:flex; align-items:center; justify-content:center; border:0; background:none; color:#2A1A12; cursor:pointer; padding:0;" style-focus="outline:3px solid #B23A12; outline-offset:2px;"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round;"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+            </div>
+            <div style="height:6px; background: repeating-linear-gradient(90deg, #B23A12 0 18px, #E8A33D 18px 30px, #1F7A3A 30px 38px, #E8A33D 38px 44px, #2A1A12 44px 50px);"></div>
+          </div>
+          <nav aria-label="Mobile" style="flex:1; overflow-y:auto; padding:8px 16px;">
+            <ul style="list-style:none; margin:0; padding:0;">
+              <li style="border-bottom:1px solid #EADBC8;"><button onClick="{{ goMenu }}" style="width:100%; min-height:64px; display:flex; align-items:center; justify-content:space-between; font-size:24px; font-weight:700; background:none; border:0; color:#2A1A12; padding:0; cursor:pointer;"><span>Menu</span><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" style="fill:none; stroke:#6B5A50; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M9 6l6 6-6 6"></path></svg></button></li>
+              <li style="border-bottom:1px solid #EADBC8;"><button onClick="{{ goCatering }}" style="width:100%; min-height:64px; display:flex; align-items:center; justify-content:space-between; font-size:24px; font-weight:700; background:none; border:0; color:#2A1A12; padding:0; cursor:pointer;"><span>Catering</span><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" style="fill:none; stroke:#6B5A50; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M9 6l6 6-6 6"></path></svg></button></li>
+              <li style="border-bottom:1px solid #EADBC8;"><button onClick="{{ goFind }}" style="width:100%; min-height:64px; display:flex; align-items:center; justify-content:space-between; font-size:24px; font-weight:700; background:none; border:0; color:#2A1A12; padding:0; cursor:pointer;"><span>Find us</span><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" style="fill:none; stroke:#6B5A50; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M9 6l6 6-6 6"></path></svg></button></li>
+              <li style="border-bottom:1px solid #EADBC8;"><button onClick="{{ goContact }}" aria-current="{{ cur.contactAria }}" style="width:100%; min-height:64px; display:flex; align-items:center; justify-content:space-between; font-size:24px; font-weight:700; background:none; border:0; color:#2A1A12; padding:0; cursor:pointer;"><span style="text-decoration: {{ cur.contactDeco }}; text-decoration-color:#E8A33D; text-decoration-thickness:3px; text-underline-offset:8px;">Contact</span><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" style="fill:none; stroke:#6B5A50; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M9 6l6 6-6 6"></path></svg></button></li>
+            </ul>
+          </nav>
+          <div style="flex-shrink:0; padding:16px 16px 24px; border-top:1px solid #EADBC8; display:flex; flex-direction:column; gap:12px;">
+            <button onClick="{{ openWaGeneral }}" style="display:flex; align-items:center; justify-content:center; gap:8px; min-height:52px; border:0; border-radius:999px; background:#B23A12; color:#fff; font-size:17px; font-weight:700; cursor:pointer; width:100%;" style-hover="background:#8C2D0E;"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.3z"></path><path d="M9 9c0 3 3 6 6 6"></path></svg>Order on WhatsApp</button>
+            <p style="margin:0; text-align:center; color:#6B5A50; font-size:15px;">Open Mon–Sat, 7am–8pm</p>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ waMounted }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute; inset:0; z-index:70; background: rgba(42,26,18,.55); display:flex; align-items: {{ r.waAlign }}; justify-content:center; opacity: {{ waOpacity }}; transition: opacity 150ms ease;">
+          <div role="dialog" aria-label="Mock WhatsApp chat" style="width: {{ r.waW }}; height: {{ r.waH }}; background:#ECE5DB; display:flex; flex-direction:column; border-radius: {{ r.waRadius }}; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,.3);">
+            <div style="background:#F3F1FF; color:#2E2580; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:11px; padding:8px 12px; border-bottom:1.5px dashed #5B4FD6;">PROTOTYPE ONLY · mock chat — the live button opens wa.me</div>
+            <div style="background:#1F3A2E; color:#fff; height:60px; display:flex; align-items:center; gap:12px; padding:0 4px 0 16px; flex-shrink:0;">
+              <span style="width:36px; height:36px; border-radius:50%; background:#E8A33D; color:#2A1A12; font-family: Georgia, serif; font-weight:700; display:flex; align-items:center; justify-content:center; font-size:14px;">AE</span>
+              <div style="flex:1; display:flex; flex-direction:column;"><span style="font-weight:700;">Auntie Esi's Kitchen</span><span style="font-size:12px; opacity:.85;">+233 53 345 6233</span></div>
+              <button onClick="{{ closeWa }}" aria-label="Close chat" style="width:48px; height:48px; border:0; background:none; color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round;"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+            </div>
+            <div style="flex:1; padding:16px; display:flex; flex-direction:column; justify-content:flex-end; gap:8px; overflow-y:auto;">
+              <sc-if value="{{ waSent }}" hint-placeholder-val="{{ false }}">
+                <div style="align-self:flex-end; max-width:85%; background:#D7EFC9; color:#1A2A12; padding:10px 12px; border-radius:12px 12px 2px 12px; font-size:15px; line-height:1.45;">{{ waMsg }}</div>
+              </sc-if>
+            </div>
+            <div style="display:flex; align-items:flex-end; gap:8px; padding:8px 8px 12px; flex-shrink:0;">
+              <div style="flex:1; min-height:48px; background:#fff; border-radius:24px; padding:13px 16px; font-size:15px; line-height:1.4; color: {{ waDraftColor }};">{{ waDraft }}</div>
+              <button onClick="{{ sendWa }}" aria-label="Send" style="flex-shrink:0; width:48px; height:48px; border-radius:50%; border:0; background:#1F7A3A; color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><path d="M4 12l16-8-6 16-3-7-7-1z"></path></svg></button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ toastShow }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="position:absolute; left:16px; right:16px; bottom:96px; z-index:80; display:flex; justify-content:center; pointer-events:none;">
+          <span style="background:#F3F1FF; color:#2E2580; border:1.5px dashed #5B4FD6; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px; padding:10px 14px; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,.15);">{{ toast }}</span>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;viewport&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;mobile&quot;,&quot;desktop&quot;],&quot;default&quot;:&quot;mobile&quot;,&quot;tsType&quot;:&quot;'mobile'|'desktop'&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;contact&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;'home'|'contact'&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;simulateFailure&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;prefillForm&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;mode&quot;:{&quot;editor&quot;:null,&quot;default&quot;:&quot;prototype&quot;,&quot;tsType&quot;:&quot;'prototype'|'frame'|'screen'&quot;},&quot;formState&quot;:{&quot;editor&quot;:null,&quot;default&quot;:&quot;idle&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;menuOpen&quot;:{&quot;editor&quot;:null,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onlyForm&quot;:{&quot;editor&quot;:null,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;enquiryType&quot;:{&quot;editor&quot;:null,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  scrollRef = React.createRef();
+  state = this.init();
+
+  init() {
+    const p = this.props || {};
+    const fsp = p.formState || 'idle';
+    const sample = { name: 'Ama Mensah', phone: '024 123 4567', email: '', type: 'Catering', event_date: '2026-12-12', guests: '120', message: 'Wedding lunch in East Legon for 120 guests. Jollof, kelewele and drinks.' };
+    const empty = { name: '', phone: '', email: '', type: p.enquiryType || '', event_date: '', guests: '', message: '' };
+    let form = p.prefillForm ? this.sample() : empty, errors = {}, formState = fsp;
+    if (fsp === 'error') {
+      form = { ...empty, phone: '024 123' };
+      errors = { name: 'Please enter your name.', phone: 'Enter a Ghana number, e.g. 024 123 4567.', type: 'Please choose an enquiry type.', message: 'Please write a short message.' };
+    }
+    if (['sending', 'success', 'failed'].includes(fsp)) form = sample;
+    if (fsp === 'catering') { form = { ...empty, type: 'Catering', event_date: '2026-12-12', guests: '120' }; formState = 'idle'; }
+    if (fsp === 'empty') formState = 'idle';
+    return { viewport: p.viewport || 'mobile', screen: p.startScreen || 'home', menuMounted: !!p.menuOpen, menuVisible: !!p.menuOpen, waMounted: false, waVisible: false, waMsg: '', waSent: false, form, errors, formState, failSim: false, toast: '', screenOpacity: 1, scale: 1 };
+  }
+
+  componentDidMount() {
+    this.onKey = e => { if (e.key === 'Escape') { if (this.state.waMounted) this.closeWa(); else if (this.state.menuMounted) this.closeMenu(); } };
+    this.onResize = () => this.measure();
+    window.addEventListener('keydown', this.onKey);
+    window.addEventListener('resize', this.onResize);
+    this.measure();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.onKey);
+    window.removeEventListener('resize', this.onResize);
+    [this.ft, this.mt, this.wt, this.st, this.tt].forEach(clearTimeout);
+    cancelAnimationFrame(this.raf);
+  }
+  componentDidUpdate(pp) {
+    const p = this.props;
+    if (['viewport', 'startScreen', 'formState', 'menuOpen', 'enquiryType', 'mode'].some(k => pp[k] !== p[k])) this.setState(this.init(), () => this.measure());
+    else if (pp.prefillForm !== p.prefillForm) {
+      this.setState({ form: p.prefillForm ? this.sample() : { name: '', phone: '', email: '', type: '', event_date: '', guests: '', message: '' }, errors: {}, formState: 'idle' });
+      if (p.prefillForm && this.state.screen !== 'contact') this.nav('contact');
+    }
+  }
+
+  sample() { return { name: 'Ama Mensah', phone: '024 123 4567', email: 'ama@example.com', type: 'Catering', event_date: '2026-12-12', guests: '120', message: 'Wedding lunch in East Legon for 120 guests. Jollof, kelewele and drinks.' }; }
+  mode() { return this.props.mode || 'prototype'; }
+  hh() { return this.state.viewport === 'mobile' ? 60 : 72; }
+  measure() {
+    if (this.mode() !== 'prototype') { if (this.state.scale !== 1) this.setState({ scale: 1 }); return; }
+    const isM = this.state.viewport === 'mobile', W = isM ? 360 : 1280, H = isM ? 740 : 800;
+    const sc = Math.max(0.3, Math.min(1, (window.innerWidth - 32) / W, (window.innerHeight - 32) / H));
+    if (Math.abs(sc - this.state.scale) > 0.001) this.setState({ scale: sc });
+  }
+
+  scrollToY(y) {
+    const sc = this.scrollRef.current; if (!sc) return;
+    cancelAnimationFrame(this.raf);
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) { sc.scrollTop = y; return; }
+    const start = sc.scrollTop, d = y - start, dur = 500, t0 = performance.now();
+    const ease = t => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    const step = now => { const p = Math.min(1, (now - t0) / dur); sc.scrollTop = start + d * ease(p); if (p < 1) this.raf = requestAnimationFrame(step); };
+    this.raf = requestAnimationFrame(step);
+  }
+  scrollToSec(id) {
+    const sc = this.scrollRef.current; if (!sc) return;
+    const el = sc.querySelector('[data-sec="' + id + '"]'); if (!el) return;
+    const s = this.state.scale || 1;
+    const y = (el.getBoundingClientRect().top - sc.getBoundingClientRect().top) / s + sc.scrollTop - this.hh() - 16;
+    this.scrollToY(Math.max(0, y));
+  }
+  nav(screen, sec) {
+    const go = () => {
+      if (screen !== this.state.screen) {
+        this.setState({ screenOpacity: 0 });
+        clearTimeout(this.ft);
+        this.ft = setTimeout(() => this.setState({ screen, screenOpacity: 1 }, () => {
+          const sc = this.scrollRef.current; if (sc) sc.scrollTop = 0;
+          if (sec) setTimeout(() => this.scrollToSec(sec), 80);
+        }), 120);
+      } else if (sec) this.scrollToSec(sec);
+      else this.scrollToY(0);
+    };
+    if (this.state.menuMounted) { this.closeMenu(); setTimeout(go, 170); } else go();
+  }
+
+  openMenu() { clearTimeout(this.mt); this.setState({ menuMounted: true, menuVisible: false }, () => requestAnimationFrame(() => requestAnimationFrame(() => this.setState({ menuVisible: true })))); }
+  closeMenu() { this.setState({ menuVisible: false }); clearTimeout(this.mt); this.mt = setTimeout(() => this.setState({ menuMounted: false }), 150); }
+  openWa(msg) { clearTimeout(this.wt); this.setState({ waMounted: true, waVisible: false, waMsg: msg, waSent: false }, () => requestAnimationFrame(() => requestAnimationFrame(() => this.setState({ waVisible: true })))); }
+  closeWa() { this.setState({ waVisible: false }); clearTimeout(this.wt); this.wt = setTimeout(() => this.setState({ waMounted: false }), 150); }
+  showToast(t) { this.setState({ toast: t }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: '' }), 2400); }
+
+  validate(k, f) {
+    const v = String(f[k] || '').trim();
+    if (k === 'name') return v ? '' : 'Please enter your name.';
+    if (k === 'phone') return /^(\+233|0)[0-9]{9}$/.test(v.replace(/\s+/g, '')) ? '' : 'Enter a Ghana number, e.g. 024 123 4567.';
+    if (k === 'type') return v ? '' : 'Please choose an enquiry type.';
+    if (k === 'message') return v ? '' : 'Please write a short message.';
+    if (k === 'email') return !v || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v) ? '' : 'Check the email address, e.g. name@example.com.';
+    if (k === 'guests') return !v || +v >= 1 ? '' : 'Enter at least 1 guest.';
+    return '';
+  }
+  setField(k, v) {
+    this.setState(s => {
+      const form = { ...s.form, [k]: v }, errors = { ...s.errors };
+      if (errors[k]) { const m = this.validate(k, form); if (m) errors[k] = m; else delete errors[k]; }
+      if (k === 'type' && v !== 'Catering') delete errors.guests;
+      return { form, errors, formState: s.formState === 'success' ? 'success' : (s.formState === 'error' && !Object.keys(errors).length ? 'idle' : s.formState) };
+    });
+  }
+  blurField(k) {
+    this.setState(s => {
+      if (!String(s.form[k] || '').trim() && !s.errors[k]) return null;
+      const m = this.validate(k, s.form), errors = { ...s.errors };
+      if (m) errors[k] = m; else delete errors[k];
+      return { errors };
+    });
+  }
+  submit() {
+    const s = this.state; if (s.formState === 'sending') return;
+    const keys = ['name', 'phone', 'email', 'type', 'message'].concat(s.form.type === 'Catering' ? ['guests'] : []);
+    const errors = {}; keys.forEach(k => { const m = this.validate(k, s.form); if (m) errors[k] = m; });
+    if (Object.keys(errors).length) { this.setState({ errors, formState: 'error' }); return; }
+    this.setState({ errors: {}, formState: 'sending' });
+    clearTimeout(this.st);
+    this.st = setTimeout(() => this.setState({ formState: this.props.simulateFailure ? 'failed' : 'success' }), 1400);
+  }
+
+  renderVals() {
+    const s = this.state, mode = this.mode(), isM = s.viewport === 'mobile';
+    const onlyForm = !!this.props.onlyForm;
+    const W = isM ? 360 : 1280, H = isM ? 740 : 800;
+    const fixed = mode !== 'frame' && !onlyForm, sc = mode === 'prototype' ? s.scale : 1;
+    const L = {
+      outerPad: mode === 'prototype' ? '16px' : '0', outerMinH: mode === 'prototype' ? '100vh' : 'auto',
+      vpW: W + 'px', vpH: fixed ? H + 'px' : 'auto', boxW: Math.round(W * sc) + 'px', boxH: fixed ? Math.round(H * sc) + 'px' : 'auto',
+      scale: sc, vpOverflow: fixed ? 'hidden' : 'visible', scPos: fixed ? 'absolute' : 'relative', scOverflow: fixed ? 'auto' : 'visible',
+      shadow: mode === 'prototype' ? '0 1px 2px rgba(0,0,0,.08), 0 16px 48px rgba(42,26,18,.2)' : 'none',
+    };
+    const photo = 'plate of waakye with shito, egg & fried plantain';
+    const r = isM ? {
+      g: '16px', headerRow: '54px', wm: '16px', logo: '32', wmDir: 'column', h1: '2.125rem', h2: '1.625rem', lead: '1.0625rem', sec: '48px', gapL: '32px',
+      heroMinH: '450px', heroPad: '48px 16px 40px', btnDir: 'column', btnW: '100%', grid3: 'minmax(0,1fr)', grid2: 'minmax(0,1fr)',
+      aboutImgOrder: '2', catDir: 'column', catAlign: 'stretch', footDir: 'column', footAlign: 'flex-start', footPadB: '88px', waInset: '16px',
+      cardPad: '20px', contactCols: 'minmax(0,1fr)', contactPad: onlyForm ? '16px' : '32px 16px 48px', submitW: '100%', infoPad: '0',
+      waAlign: 'stretch', waW: '100%', waH: '100%', waRadius: '0', stepGap: '24px',
+      heroFocus: '62% 50%',
+    } : {
+      g: '32px', headerRow: '66px', wm: '22px', logo: '40', wmDir: 'row', h1: '3.25rem', h2: '2.25rem', lead: '1.1875rem', sec: '64px', gapL: '48px',
+      heroMinH: '720px', heroPad: '64px 32px', btnDir: 'row', btnW: 'auto', grid3: 'repeat(3, minmax(0,1fr))', grid2: 'repeat(2, minmax(0,1fr))',
+      aboutImgOrder: '0', catDir: 'row', catAlign: 'center', footDir: 'row', footAlign: 'center', footPadB: '32px', waInset: '24px',
+      cardPad: '32px', contactCols: 'minmax(0,1.6fr) minmax(0,1fr)', contactPad: onlyForm ? '24px' : '40px 32px 64px', submitW: 'auto', infoPad: '8px 0 0',
+      waAlign: 'center', waW: '400px', waH: '620px', waRadius: '16px', stepGap: '32px',
+      heroFocus: '50% 50%',
+    };
+    const GEN = "Hello Auntie Esi, I'd like to order:";
+    const dishes = [
+      ['Waakye Special', 'Rice and beans with shito, gari, spaghetti, egg and wele', 45, 'images/waakye-special.jpg', 'Waakye on a leaf with shito, gari, spaghetti, boiled egg and wele'],
+      ['Jollof & Chicken', 'Smoky party jollof with grilled chicken and salad', 60, 'images/jollof-chicken.jpg', 'Jollof rice with a grilled chicken leg and fresh salad on a kente-print tablecloth'],
+      ['Banku & Tilapia', 'Two balls of banku, grilled tilapia, pepper and onions', 85, 'images/banku-tilapia.jpg', 'Two balls of banku with a whole grilled tilapia, onions, chilli and pepper sauce'],
+      ['Fufu & Light Soup', 'Pounded fufu in goat light soup', 70, 'images/fufu-light-soup.jpg', 'A ball of fufu in goat light soup with garden eggs in an earthenware bowl'],
+      ['Kelewele', 'Spiced fried ripe plantain with roasted groundnuts', 25, 'images/kelewele.jpg', 'Spiced fried plantain cubes in a paper wrap with roasted groundnuts'],
+      ['Red Red', 'Bean stew in palm oil with fried plantain', 40, 'images/red-red.jpg', 'Red red bean stew topped with gari, with fried plantain slices in an enamel bowl'],
+    ].map(([name, desc, price, img, alt]) => ({ name, desc, price, img: img || '', alt: alt || '', hasImg: !!img, noImg: !img, priceLabel: 'GHS ' + price, order: () => this.openWa(GEN + ' ' + name + ' (GHS ' + price + ')') }));
+    const fld = k => { const m = s.errors[k]; return { has: !!m, msg: m || '', border: m ? '#B23A12' : '#9A8678', bg: m ? '#FFF6F2' : '#fff', invalid: m ? 'true' : 'false' }; };
+    const keys = ['name', 'phone', 'email', 'type', 'event_date', 'guests', 'message'];
+    const fe = {}, h = {}, b = {};
+    keys.forEach(k => { fe[k] = fld(k); h[k] = e => this.setField(k, e.target.value); b[k] = () => this.blurField(k); });
+    const st = s.formState;
+    const isContact = s.screen === 'contact' || onlyForm;
+    return {
+      L, r, isM, isD: !isM, dishes, form: s.form, fe, h, b,
+      showChrome: !onlyForm, showExtras: !onlyForm,
+      isHome: !isContact, isContact,
+      screenOpacity: s.screenOpacity,
+      cur: { contactDeco: isContact ? 'underline' : 'none', contactAria: isContact ? 'page' : 'false' },
+      menuExpanded: s.menuMounted ? 'true' : 'false',
+      goHome: () => this.nav('home'),
+      goMenu: () => this.nav('home', 'menu'),
+      goCatering: () => this.nav('home', 'catering'),
+      goFind: () => this.nav('home', 'find-us'),
+      goContact: () => this.nav('contact'),
+      goCateringQuote: () => { this.setState(x => ({ form: { ...x.form, type: 'Catering' }, errors: {}, formState: x.formState === 'success' ? 'idle' : x.formState })); this.nav('contact'); },
+      openWaGeneral: () => this.openWa(GEN),
+      openMaps: () => this.showToast('Prototype: opens Google Maps (Oxford Street, Osu) in a new tab'),
+      onGithub: e => { e.preventDefault(); this.showToast('Prototype: opens the GitHub repo'); },
+      openMenu: () => this.openMenu(), closeMenu: () => this.closeMenu(),
+      menuMounted: s.menuMounted, menuOpacity: s.menuVisible ? 1 : 0,
+      showFloat: !onlyForm && !s.menuMounted && !s.waMounted,
+      waMounted: s.waMounted, waOpacity: s.waVisible ? 1 : 0, waMsg: s.waMsg, waSent: s.waSent,
+      waDraft: s.waSent ? 'Message' : s.waMsg, waDraftColor: s.waSent ? '#8A7A70' : '#2A1A12',
+      closeWa: () => this.closeWa(), sendWa: () => this.setState({ waSent: true }),
+      toast: s.toast, toastShow: !!s.toast,
+      showCatering: s.form.type === 'Catering',
+      onSubmit: e => { e.preventDefault(); this.submit(); },
+      fs: {
+        success: st === 'success', showForm: st !== 'success', failed: st === 'failed', sending: st === 'sending', busy: st === 'sending' ? 'true' : 'false',
+        btnLabel: st === 'sending' ? 'Sending…' : 'Send enquiry', btnBg: st === 'sending' ? '#8C2D0E' : '#B23A12', cursor: st === 'sending' ? 'progress' : 'pointer',
+      },
+      imgLoading: mode === 'prototype' ? 'lazy' : 'eager',
+      frameSelect: mode !== 'prototype' && !!s.form.type,
+      scrollRef: this.scrollRef,
+    };
+  }
+}
+</script>
+</body>
+</html>

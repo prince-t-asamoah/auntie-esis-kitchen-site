@@ -75,3 +75,4 @@ jspm_packages/
 
 # Project assets
 images/originals/
+*:Zone.Identifier
