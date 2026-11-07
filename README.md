@@ -2,20 +2,20 @@
 
 Home-style Ghanaian food, cooked fresh every morning — a fast, mobile-first restaurant website with WhatsApp ordering.
 
-Status: built, awaiting deployment and owner content
+Status: live; sample content awaiting the owner's details
 
-Live site: [LIVE_URL] · Design prototype: [docs/design/kitchen-prototype/](docs/design/kitchen-prototype/)
+Live site: https://auntie-esis-kitchen-site.netlify.app/ · Design prototype: [docs/design/kitchen-prototype/](docs/design/kitchen-prototype/)
 
 ## PageSpeed Insights (mobile)
 
 | Page | Performance | Accessibility | Best Practices | SEO |
 | --- | --- | --- | --- | --- |
-| Home | [score] | [score] | [score] | [score] |
-| Contact | [score] | [score] | [score] | [score] |
+| Home | 100 | 100 | 100 | 100 |
+| Contact | 100 | 100 | 100 | 100 |
 
-Screenshots: docs/pagespeed/ (add after the first Netlify deploy).
+Measured on the live site on 7 November 2026 with Lighthouse (mobile, simulated throttling, the same engine as PageSpeed Insights). Home: FCP 1.1 s, LCP 1.6 s, TBT 60 ms, CLS 0.003, 298 KiB. Contact: FCP 0.9 s, LCP 0.9 s, TBT 10 ms, CLS 0.003, 23 KiB.
 
-Local Lighthouse (mobile, simulated throttling, before deploy): Home 97–99 / 100 / 100 / 100, Contact 100 / 100 / 100 / 100. LCP 2.0–2.3 s, CLS 0.006, page weight 323 KiB (Home) and 43 KiB (Contact).
+Screenshots: [docs/pagespeed/](docs/pagespeed/)
 
 Target: 90+ in every category on mobile, with an image-heavy menu and no framework.
 
@@ -73,7 +73,7 @@ npm run preview   # http://localhost:3000
 
 Connect the GitHub repo in Netlify → leave the build command empty → publish directory "." → deploy. `netlify.toml` already sets this, plus the security headers and long-term caching for `/images/*`. It also blocks `/docs/*` and `/scripts/*` on the live site.
 
-After the first deploy, replace `auntie-esis-kitchen-site.netlify.app` with the live domain in both pages (canonical, `og:url`, `og:image`, JSON-LD), `sitemap.xml` and `robots.txt`.
+The site's domain (`auntie-esis-kitchen-site.netlify.app`) appears in both pages (canonical, `og:url`, `og:image`, JSON-LD), `sitemap.xml` and `robots.txt`. Update all of them if you move to a custom domain.
 
 ## Performance techniques
 
