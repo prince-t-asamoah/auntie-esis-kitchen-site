@@ -266,3 +266,4 @@ select.input { appearance: none; padding-right: 44px; background: #fff url("data
 .info .card-row { font-weight: 600; }
 .info .hours li { padding-block: 4px; border: 0; font-weight: 500; }
 .info a { color: var(--color-ink); font-weight: 500; }
+.info address { font-style: normal; }
