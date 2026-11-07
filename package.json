@@ -1,0 +1,14 @@
+{
+  "name": "auntie-esis-kitchen-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Auntie Esi's Kitchen: a fast, two-page static restaurant site. No build step; npm is only used for the optional image script.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "optimise-images": "node scripts/optimise-images.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.0"
+  }
+}

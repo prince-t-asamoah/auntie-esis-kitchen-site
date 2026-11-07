@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /docs/
+
+# TODO: replace with the live domain
+Sitemap: https://auntie-esis-kitchen-site.netlify.app/sitemap.xml
